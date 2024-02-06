@@ -50,9 +50,9 @@ else:
 
     daynum: the number corresponding to the day in days list
 
-    fullDate: the date in month/day/year format; ex. 12/07/20 - DEPROCATED
+    fullDate: the date in month/day/year format; ex. 12/07/20 - DEPRECATED
 
-    datelist: the list containing the splited values of month, day, and year from fullDate - DEPROCATED
+    datelist: the list containing the splitted values of month, day, and year from fullDate - DEPRECATED
 
     days: list containing weekdays Monday - Friday
 

@@ -1,69 +1,76 @@
-Remove-Item -Path $env:USERPROFILE\InstallerScript -Recurse -ErrorAction SilentlyContinue
-New-Item -Path $env:USERPROFILE\InstallerScript -ItemType Directory -ErrorAction SilentlyContinue
-cd $env:USERPROFILE\InstallerScript
-
 Write-Host "These prompts must be answered in y or n format." -ForegroundColor Red
+Write-Host "All prompts come before installing" -ForegroundColor Red
 
-$steam = Read-Host -Prompt "Do you want to install Steam? (y/n)"
-$spotify = Read-Host -Prompt "Do you want to install Spotify? (y/n)" -Default "n" -NoNewline
-#$workman = Read-Host -Prompt "Do you want to install Workman? (y/n)" -Default "n" -NoNewline
-$brave = Read-Host -Prompt "Do you want to install Brave? (y/n)" -Default "n" -NoNewline
-$VSComunity = Read-Host -Prompt "Do you want to install Visual Studio Community? (y/n)" -Default "n" -NoNewline
-$VSCode = Read-Host -Prompt "Do you want to install Visual Studio Code? (y/n)" -Default "n" -NoNewline
-$discord = Read-Host -Prompt "Do you want to install Discord? (y/n)" -Default "n" -NoNewline
-$googleDrive = Read-Host -Prompt "Do you want to install Google Drive? (y/n)" -Default "n" -NoNewline
-$python = Read-Host -Prompt "Do you want to install Python? (y/n)" -Default "n" -NoNewline
+# Set Defaults
+$steam = "n"
+$spotify = "n"
+$workman = "n"
+$brave = "n"
+$VSComunity = "n"
+$VSCode = "n"
+$discord = "n"
+$googleDrive = "n"
+$python = "n"
+
+# Get User Input
+$steam = (Read-Host -Prompt "Do you want to install Steam? (y/N)").ToLower()
+$spotify = (Read-Host -Prompt "Do you want to install Spotify? (y/N)").ToLower()
+$workman = (Read-Host -Prompt "Do you want to install Workman? (y/N)").ToLower()
+$brave = (Read-Host -Prompt "Do you want to install Brave? (y/N)").ToLower()
+$VSComunity = (Read-Host -Prompt "Do you want to install Visual Studio Community? (y/N)").ToLower()
+$VSCode = (Read-Host -Prompt "Do you want to install Visual Studio Code? (y/N)").ToLower()
+$discord = (Read-Host -Prompt "Do you want to install Discord? (y/N)").ToLower()
+$googleDrive = (Read-Host -Prompt "Do you want to install Google Drive? (y/N)").ToLower()
+$python = (Read-Host -Prompt "Do you want to install Python? (y/N)").ToLower()
+
 
 if ($steam -eq "y") {
     Write-Host "Installing Steam..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\steamInstall.exe "https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe"
-    .\steamInstall.exe
+    winget install Valve.Steam
 }
 
 if ($spotify -eq "y") {
     Write-Host "Installing Spotify..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\spotifyInstall.exe "https://download.scdn.co/SpotifySetup.exe"
-    .\spotifyInstall.exe
+    winget install Spotify.Spotify
 }
 
-#if ($workman -eq "y") {
-#    Write-Host "Installing Workman..." -ForegroundColor Green
-#    curl -o $env:USERPROFILE\InstallerScript\workmanInstall.msi "https://github.com/workman-layout/Workman/blob/master/windows/installer/workman-us/wm-us_amd64.msi"
-#    .\workmanInstall.msi
-#}
+if ($workman -eq "y") {
+    Write-Host "Installing Workman..." -ForegroundColor Green
+    winget install workman-layout.workman
+}
 
 if ($brave -eq "y") {
     Write-Host "Installing Brave..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\braveInstall.exe "https://referrals.brave.com/latest/BraveBrowserSetup.exe"
-    .\braveInstall.exe
+    winget install Brave.Brave
 }
 
 if ($VSComunity -eq "y") {
     Write-Host "Installing Visual Studio Community..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\VSComunityInstall.exe "https://aka.ms/vs/17/release/vs_community.exe"
-    .\VSComunityInstall.exe
+    winget search Microsoft.VisualStudio.2022.Community
 }
 
 if ($VSCode -eq "y") {
     Write-Host "Installing Visual Studio Code..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\VSCodeInstall.exe "https://az764295.vo.msecnd.net/stable/c722ca6c7eed3d7987c0d5c3df5c45f6b15e77d1/VSCodeUserSetup-x64-1.65.2.exe"
-    .\VSCodeInstall.exe
+    winget install Microsoft.VisualStudioCode
 }
 
 if ($discord -eq "y") {
     Write-Host "Installing Discord..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\discordInstall.exe "https://dl.discordapp.net/distro/app/stable/win/x86/1.0.9004/DiscordSetup.exe"
-    .\discordInstall.exe
+    winget search Discord.Discord
+    # winget install Discord.Discord
 }
 
 if ($googleDrive -eq "y") {
     Write-Host "Installing Google Drive..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\driveInstall.exe "https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe"
-    .\driveInstall.exe
+    winget install Google.GoogleDrive
 }
 
 if ($python -eq "y") {
     Write-Host "Installing Python..." -ForegroundColor Green
-    curl -o $env:USERPROFILE\InstallerScript\pythonInstall.exe "https://www.python.org/ftp/python/3.10.3/python-3.10.3-amd64.exe"
-    .\pythonInstall.exe
+    winget install Python.Python.3.12
+}
+
+$exit = Read-Host -Prompt "Script done. Press ENTER to clear terminal or enter y to close window"
+if ($exit -eq "y") {
+    exit
 }
