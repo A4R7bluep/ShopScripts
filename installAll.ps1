@@ -1,76 +1,34 @@
-Write-Host "These prompts must be answered in y or n format." -ForegroundColor Red
-Write-Host "All prompts come before installing" -ForegroundColor Red
+function Prompt {
+    param (
+        [Parameter(Mandatory)]
+        $appName,
+        $appID
+    )
 
-# Set Defaults
-$steam = "n"
-$spotify = "n"
-$workman = "n"
-$brave = "n"
-$VSComunity = "n"
-$VSCode = "n"
-$discord = "n"
-$googleDrive = "n"
-$python = "n"
+    $input = Read-Host 'Do you want to install' $appName
 
-# Get User Input
-$steam = (Read-Host -Prompt "Do you want to install Steam? (y/N)").ToLower()
-$spotify = (Read-Host -Prompt "Do you want to install Spotify? (y/N)").ToLower()
-$workman = (Read-Host -Prompt "Do you want to install Workman? (y/N)").ToLower()
-$brave = (Read-Host -Prompt "Do you want to install Brave? (y/N)").ToLower()
-$VSComunity = (Read-Host -Prompt "Do you want to install Visual Studio Community? (y/N)").ToLower()
-$VSCode = (Read-Host -Prompt "Do you want to install Visual Studio Code? (y/N)").ToLower()
-$discord = (Read-Host -Prompt "Do you want to install Discord? (y/N)").ToLower()
-$googleDrive = (Read-Host -Prompt "Do you want to install Google Drive? (y/N)").ToLower()
-$python = (Read-Host -Prompt "Do you want to install Python? (y/N)").ToLower()
+    $output = $input -match '^y(es)?$'
 
-
-if ($steam -eq "y") {
-    Write-Host "Installing Steam..." -ForegroundColor Green
-    winget install Valve.Steam
+    if ($output) {
+        if ($appName -eq "Spicetify") {
+            iwr -useb "https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1" | iex
+            iwr -useb "https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1" | iex
+        }
+        else {
+            winget install $appID
+        }
+    }
 }
 
-if ($spotify -eq "y") {
-    Write-Host "Installing Spotify..." -ForegroundColor Green
-    winget install Spotify.Spotify
-}
-
-if ($workman -eq "y") {
-    Write-Host "Installing Workman..." -ForegroundColor Green
-    winget install workman-layout.workman
-}
-
-if ($brave -eq "y") {
-    Write-Host "Installing Brave..." -ForegroundColor Green
-    winget install Brave.Brave
-}
-
-if ($VSComunity -eq "y") {
-    Write-Host "Installing Visual Studio Community..." -ForegroundColor Green
-    winget search Microsoft.VisualStudio.2022.Community
-}
-
-if ($VSCode -eq "y") {
-    Write-Host "Installing Visual Studio Code..." -ForegroundColor Green
-    winget install Microsoft.VisualStudioCode
-}
-
-if ($discord -eq "y") {
-    Write-Host "Installing Discord..." -ForegroundColor Green
-    winget search Discord.Discord
-    # winget install Discord.Discord
-}
-
-if ($googleDrive -eq "y") {
-    Write-Host "Installing Google Drive..." -ForegroundColor Green
-    winget install Google.GoogleDrive
-}
-
-if ($python -eq "y") {
-    Write-Host "Installing Python..." -ForegroundColor Green
-    winget install Python.Python.3.12
-}
-
-$exit = Read-Host -Prompt "Script done. Press ENTER to clear terminal or enter y to close window"
-if ($exit -eq "y") {
-    exit
-}
+Prompt -appName "Brave" -appID "Brave.Brave"
+Prompt -appName "Discord" -appID "Discord.Discord"
+Prompt -appName "Spotify" -appID "Spotify.Spotify"
+Prompt -appName "VS Code" -appID "Microsoft.VisualStudioCode"
+Prompt -appName "Steam" -appID "Valve.Steam"
+Prompt -appName "VS Community" -appID "Microsoft.VisualStudio.2022.Community"
+Prompt -appName "Workman Layout" -appID "workman-layout.workman"
+Prompt -appName "Python 3.11" -appID "9NRWMJP3717K"
+Prompt -appName "Google Drive" -appID "Google.Drive"
+Prompt -appName "PowerToys" -appID "Microsoft.PowerToys"
+Prompt -appName "TranslucentTB" -appID "9PF4KZ2VN4W9"
+Prompt -appName "Spicetify"
